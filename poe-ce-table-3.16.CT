@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Increase Player Light"</Description>
+      <Options moActivateChildrenAsWell="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(IncreasePlayerLightAob, PathofExile.exe, 48 8d 55 f0 f3 41 0f 58 49 04)
+define(IncreasePlayerLight, IncreasePlayerLightAob)
+define(IncreasePlayerLightReturn, IncreasePlayerLightAob+98)
+alloc(IncreasePlayerLightOriginal, $5)
+alloc(Handler, $1500, IncreasePlayerLight)
+registersymbol(IncreasePlayerLight)
+registersymbol(IncreasePlayerLightOriginal)
+registersymbol(IncreasePlayerLightReturn)
+registersymbol(Intensity)
+
+IncreasePlayerLightOriginal:
+   readmem(IncreasePlayerLight, 5)
+
+Handler:
+lea rdx,[rbp-10]
+addss xmm1,[r9+04]
+mulss xmm4,[Intensity]
+mov rcx,rbx
+mov qword ptr [rbp-20],00000000
+subss xmm0,[other1]
+mov [rbp-18],3F800000
+subss xmm1,[FrontDistance]
+movaps xmm3,xmm4
+mov [rsp+20],rax
+addss xmm0,[other2]
+addss xmm1,[other3]
+movss [rbp-10],xmm0
+movss xmm0,[rbp+30]
+subss xmm0,[Height]
+movss [rbp-0C],xmm1
+movss xmm1,[rbx+44]
+movss [rbp-2C],xmm1
+addss xmm0,[r8+38]
+lea r8,[rbp-20]
+addss xmm0,[other4]
+movss [rbp-08],xmm0
+movss xmm0,[rbx+40]
+movss [rbp-30],xmm0
+movss xmm0,[rbx+48]
+movss [rbp-28],xmm0
+
+jmp IncreasePlayerLightReturn
+
+Height:
+   dd (float)1000.0
+Intensity:
+   dd (float)20000.0
+FrontDistance:
+   dd (float)83.50
+other1:
+   dd (float)22.50
+other2:	//375F218
+   dd (float)1.00
+other3:
+   dd (float)0.00
+other4:
+   dd (float)0.00
+
+
+
+IncreasePlayerLight:
+   jmp Handler
+
+[DISABLE]
+IncreasePlayerLight:
+   readmem(IncreasePlayerLightOriginal, 5)
+unregistersymbol(IncreasePlayerLight)
+unregistersymbol(IncreasePlayerLightOriginal)
+unregistersymbol(IncreasePlayerLightReturn)
+
+unregistersymbol(Intensity)
+
+dealloc(IncreasePlayerLightOriginal)
+dealloc(Handler)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>49</ID>
+          <Description>"Intensity [ 0 ～9999999]"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>Intensity</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Always Show Enemy Health Bars"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(AlwaysShowHealthBars, PathofExile.exe, 7C 6D 41 8B 88 EC 01 00 00)
+registersymbol(AlwaysShowHealthBars)
+AlwaysShowHealthBars:
+   db EB
+ 
+[DISABLE]
+AlwaysShowHealthBars:
+   db 7C
+unregistersymbol(AlwaysShowHealthBars)
+
+
+{
+// ORIGINAL CODE - INJECTION POINT: PathOfExile.exe+4E39C5
+
+PathOfExile.exe+4E399B: 83 F0 01                    - xor eax,01
+PathOfExile.exe+4E399E: 03 D0                       - add edx,eax
+PathOfExile.exe+4E39A0: 66 0F 6E CA                 - movd xmm1,edx
+PathOfExile.exe+4E39A4: 0F 5B C9                    - cvtdq2ps xmm1,xmm1
+PathOfExile.exe+4E39A7: 41 2B 88 54 02 00 00        - sub ecx,[r8+00000254]
+PathOfExile.exe+4E39AE: 41 BA 00 00 00 00           - mov r10d,00000000
+PathOfExile.exe+4E39B4: F3 0F 2C C1                 - cvttss2si eax,xmm1
+PathOfExile.exe+4E39B8: 2B C8                       - sub ecx,eax
+PathOfExile.exe+4E39BA: 41 0F 48 CA                 - cmovs ecx,r10d
+PathOfExile.exe+4E39BE: 41 39 88 50 02 00 00        - cmp [r8+00000250],ecx
+// ---------- INJECTING HERE ----------
+PathOfExile.exe+4E39C5: 7C 6D                       - jl PathOfExile.exe+4E3A34
+// ---------- DONE INJECTING  ----------
+PathOfExile.exe+4E39C7: 41 8B 88 EC 01 00 00        - mov ecx,[r8+000001EC]
+PathOfExile.exe+4E39CE: 66 41 0F 6E 88 F8 01 00 00  - movd xmm1,[r8+000001F8]
+PathOfExile.exe+4E39D7: 0F 5B C9                    - cvtdq2ps xmm1,xmm1
+PathOfExile.exe+4E39DA: 66 0F 6E C1                 - movd xmm0,ecx
+PathOfExile.exe+4E39DE: 0F 5B C0                    - cvtdq2ps xmm0,xmm0
+PathOfExile.exe+4E39E1: F3 0F 59 C8                 - mulss xmm1,xmm0
+PathOfExile.exe+4E39E5: F3 0F 59 CC                 - mulss xmm1,xmm4
+PathOfExile.exe+4E39E9: F3 0F 2C D1                 - cvttss2si edx,xmm1
+PathOfExile.exe+4E39ED: 81 FA 00 00 00 80           - cmp edx,80000000
+PathOfExile.exe+4E39F3: 74 21                       - je PathOfExile.exe+4E3A16
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"Maphack"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(MaphackRevealAob, PathofExileSteam.exe, 66 C7 ?? ?? 00 00 C6 ?? ?? 00 C6 ?? ?? 00 C6)
+define(MaphackReveal, MaphackRevealAob+04)
+registersymbol(MaphackReveal)
+MaphackReveal:
+   db 01
+
+[DISABLE]
+MaphackReveal:
+   db 00
+unregistersymbol(MaphackReveal)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"Zoomhack"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+aobscanmodule(ZoomhackMouseAob, PathofExile.exe, 48 8D 44 24 20 0F 2F 11 48 0F 43 C1)
+define(ZoomhackMouse, ZoomhackMouseAob+05)
+registersymbol(ZoomhackMouse)
+
+ZoomhackMouse:
+   nop
+   nop
+   nop
+
+[DISABLE]
+ZoomhackMouse:
+   comiss xmm2,[rcx]
+
+unregistersymbol(ZoomhackMouse)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>3</ID>
+          <Description>"(optional) Disable Far Plane Culling"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+aobscanmodule(DisableFarPlaneCulling, PathofExile.exe, F3 0F 11 89 ?? ?? ?? ?? F3 0F 11 91 ?? ?? ?? ?? E9 ?? ?? ?? ?? cc cc cc cc cc)
+alloc(DisableFarPlaneCullingOriginal, $16)
+
+registersymbol(DisableFarPlaneCulling)
+registersymbol(DisableFarPlaneCullingOriginal)
+
+DisableFarPlaneCullingOriginal:
+   readmem(DisableFarPlaneCulling, 16)
+
+alloc(Handler, 100, DisableFarPlaneCulling)
+Handler:
+   movss [rcx+000002C0],xmm1
+   movss xmm2,[NewFarPlane]
+   movss [rcx+000002C4],xmm2
+   jmp Return
+
+NewFarPlane:
+   dd (float)20000.0
+
+DisableFarPlaneCulling:
+   jmp Handler
+   db 90 90 90 90 90 90 90 90 90 90 90
+
+Return:
+
+[DISABLE]
+DisableFarPlaneCulling:
+   readmem(DisableFarPlaneCullingOriginal, 16)
+dealloc(DisableFarPlaneCullingOriginal)
+dealloc(Handler)
+unregistersymbol(DisableFarPlaneCulling)
+unregistersymbol(DisableFarPlaneCullingOriginal)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"(optional) Disable Distance Fog"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(DisableFogRender,PathofExile.exe, 38 08 8B 42 10 0F 95 C1 42 89 0C 00)
+alloc(newmem,$50,"PathofExile.exe")
+alloc(change,$50,"PathofExile.exe")
+alloc(OldDisableFogRender, $4)
+
+FULLACCESS(PathofExile.exe+1C04000,0x90000)
+FULLACCESS(PathofExile.exe+1BD1000,0x90000)
+FULLACCESS(PathofExile.exe+1CD0000,0x90000)
+FULLACCESS(PathofExile.exe+1CA0000,0x90000)
+FULLACCESS(PathofExile.exe+14F0000,0x90000)
+FULLACCESS(PathofExile.exe+1D80000,0x90000)
+
+registersymbol(OldDisableFogRender)
+registersymbol(DisableFogRender)
+
+label(code)
+label(return)
+
+
+OldDisableFogRender:
+  readmem(DisableFogRender, 5)
+
+
+change:
+  mov byte ptr [rax],0
+  jmp code
+
+newmem:
+  cmp r8,1000
+  ja change
+  cmp r8,0
+  je change
+  jmp code
+
+code:
+
+  cmp [rax],cl
+  mov eax,[rdx+10]
+  jmp return
+
+
+DisableFogRender:
+  jmp newmem
+return:
+
+[DISABLE]
+
+DisableFogRender:
+  readmem(OldDisableFogRender, 5)
+
+unregistersymbol(DisableFogRender)
+unregistersymbol(OldDisableFogRender)
+dealloc(OldDisableFogRender)
+dealloc(newmem)
+dealloc(change)
+
+{
+// ORIGINAL CODE - INJECTION POINT: PathOfExile.exe.text+14812AE
+
+PathOfExile.exe.text+148128C: 49 03 C9              - add rcx,r9
+PathOfExile.exe.text+148128F: FF E1                 - jmp rcx
+PathOfExile.exe.text+1481291: 8B 4A 10              - mov ecx,[rdx+10]
+PathOfExile.exe.text+1481294: 49 03 C8              - add rcx,r8
+PathOfExile.exe.text+1481297: 4C 8B 42 18           - mov r8,[rdx+18]
+PathOfExile.exe.text+148129B: 48 8B 52 08           - mov rdx,[rdx+08]
+PathOfExile.exe.text+148129F: 48 83 C4 48           - add rsp,48
+PathOfExile.exe.text+14812A3: E9 98 80 57 00        - jmp PathOfExile.exe.text+19F9340
+PathOfExile.exe.text+14812A8: 48 8B 42 08           - mov rax,[rdx+08]
+PathOfExile.exe.text+14812AC: 33 C9                 - xor ecx,ecx
+// ---------- INJECTING HERE ----------
+PathOfExile.exe.text+14812AE: 38 08                 - cmp [rax],cl
+// ---------- DONE INJECTING  ----------
+PathOfExile.exe.text+14812B0: 8B 42 10              - mov eax,[rdx+10]
+PathOfExile.exe.text+14812B3: 0F 95 C1              - setne cl
+PathOfExile.exe.text+14812B6: 42 89 0C 00           - mov [rax+r8],ecx
+PathOfExile.exe.text+14812BA: 48 83 C4 48           - add rsp,48
+PathOfExile.exe.text+14812BE: C3                    - ret
+PathOfExile.exe.text+14812BF: 48 8D 15 92 C8 A6 00  - lea rdx,[PathOfExile.exe.rdata+373B58]
+PathOfExile.exe.text+14812C6: 48 8D 4C 24 20        - lea rcx,[rsp+20]
+PathOfExile.exe.text+14812CB: E8 80 65 C2 FE        - call PathOfExile.exe.text+A7850
+PathOfExile.exe.text+14812D0: 48 8D 15 69 4E D9 00  - lea rdx,[PathOfExile.exe.rdata+69C140]
+PathOfExile.exe.text+14812D7: 48 8D 4C 24 20        - lea rcx,[rsp+20]
+}
+
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>50</ID>
+      <Description>"Minimap Zoomhack"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(minimapzoom1,PathofExile.exe,f3 0f 59 b7 f8 02 00 00)
+aobscanmodule(minimapzoom2,PathofExile.exe,F3 0F 58 35 ?? ?? ?? ?? 0F 28 CE E8 ?? ?? ?? ?? 48)
+
+alloc(newmem1,$1000,minimapzoom1)
+alloc(miniMapZoomOriginal1, $22)
+alloc(newmem,$1000,minimapzoom2)
+alloc(miniMapZoomOriginal2, $8)
+alloc(miniMapZoomValue, $8)
+
+label(code1)
+label(return1)
+registersymbol(miniMapZoomOriginal1)
+
+registersymbol(miniMapZoomValue)
+
+label(code)
+label(return)
+registersymbol(miniMapZoomOriginal2)
+
+
+newmem1:
+  push rax
+  mov rax,[miniMapZoomValue]
+  mov [rdi+00000318],rax
+  pop rax
+
+code1:
+  lea r8,[miniMapZoomMAX]
+  mulss xmm6,[rdi+000002F8]
+  lea rdx,[miniMapZoomMIN]
+  jmp return1
+
+miniMapZoomMAX:
+  dd (float)2.0
+miniMapZoomMIN:
+  dd (float)0.05
+miniMapZoomValue:
+  dd (float)0.5
+
+miniMapZoomOriginal1:
+  readmem(minimapzoom1, 22)
+
+minimapzoom1:
+  jmp newmem1
+  nop 2
+  nop F
+
+return1:
+
+newmem:
+
+code:
+  jmp return
+
+miniMapZoomOriginal2:
+  readmem(minimapzoom2, 8)
+
+minimapzoom2:
+  jmp newmem
+  nop 3
+
+return:
+
+registersymbol(minimapzoom2)
+registersymbol(minimapzoom1)
+[DISABLE]
+
+minimapzoom1:
+  readmem(miniMapZoomOriginal1, 22)
+  //db 4C 8D 05 42 5B 36 01
+
+minimapzoom2:
+  readmem(miniMapZoomOriginal2, 8)
+  //db F3 0F 58 35 42 93 7E 01
+
+unregistersymbol(minimapzoom1)
+unregistersymbol(minimapzoom2)
+unregistersymbol(miniMapZoom2Original2)
+unregistersymbol(miniMapZoomValue)
+dealloc(newmem)
+dealloc(newmem1)
+
+{
+// ORIGINAL CODE - INJECTION POINT: PathOfExile_x64.exe+61261A
+
+PathOfExile_x64.exe+6125EA: 84 C0                    - test al,al
+PathOfExile_x64.exe+6125EC: 74 5F                    - je PathOfExile_x64.exe+61264D
+PathOfExile_x64.exe+6125EE: 48 8B 8E C0 0A 00 00     - mov rcx,[rsi+00000AC0]
+PathOfExile_x64.exe+6125F5: E8 86 E6 1D 00           - call PathOfExile_x64.exe+7F0C80
+PathOfExile_x64.exe+6125FA: 48 8B 8E B8 05 00 00     - mov rcx,[rsi+000005B8]
+PathOfExile_x64.exe+612601: 41 B0 01                 - mov r8l,01
+PathOfExile_x64.exe+612604: 66 0F 6E F0              - movd xmm6,eax
+PathOfExile_x64.exe+612608: 48 8B 89 30 02 00 00     - mov rcx,[rcx+00000230]
+PathOfExile_x64.exe+61260F: 0F 5B F6                 - cvtdq2ps xmm6,xmm6
+PathOfExile_x64.exe+612612: F3 0F 59 35 D2 91 7E 01  - mulss xmm6,[PathOfExile_x64.exe+1DFB7EC]
+// ---------- INJECTING HERE ----------
+PathOfExile_x64.exe+61261A: F3 0F 58 35 42 93 7E 01  - addss xmm6,[PathOfExile_x64.exe+1DFB964]
+// ---------- DONE INJECTING  ----------
+PathOfExile_x64.exe+612622: 0F 28 CE                 - movaps xmm1,xmm6
+PathOfExile_x64.exe+612625: E8 76 F3 09 00           - call PathOfExile_x64.exe+6B19A0
+PathOfExile_x64.exe+61262A: 48 8B 8E B8 05 00 00     - mov rcx,[rsi+000005B8]
+PathOfExile_x64.exe+612631: 41 B0 01                 - mov r8l,01
+PathOfExile_x64.exe+612634: 0F 28 CE                 - movaps xmm1,xmm6
+PathOfExile_x64.exe+612637: 48 8B 89 38 02 00 00     - mov rcx,[rcx+00000238]
+PathOfExile_x64.exe+61263E: 0F 28 74 24 20           - movaps xmm6,[rsp+20]
+PathOfExile_x64.exe+612643: 48 83 C4 30              - add rsp,30
+PathOfExile_x64.exe+612647: 5E                       - pop rsi
+PathOfExile_x64.exe+612648: E9 53 F3 09 00           - jmp PathOfExile_x64.exe+6B19A0
+}
+{
+// ORIGINAL CODE1 - INJECTION POINT: PathOfExile_x64.exe+6B1D03
+
+PathOfExile_x64.exe+6B1CC7: 0F 28 CE                 - movaps xmm1,xmm6
+PathOfExile_x64.exe+6B1CCA: F3 0F 59 8F 88 02 00 00  - mulss xmm1,[rdi+00000288]
+PathOfExile_x64.exe+6B1CD2: E8 E9 B8 A2 FF           - call PathOfExile_x64.exe+DD5C0
+PathOfExile_x64.exe+6B1CD7: F3 0F 10 54 24 54        - movss xmm2,[rsp+54]
+PathOfExile_x64.exe+6B1CDD: 48 8D 4C 24 50           - lea rcx,[rsp+50]
+PathOfExile_x64.exe+6B1CE2: F3 0F 10 4C 24 50        - movss xmm1,[rsp+50]
+PathOfExile_x64.exe+6B1CE8: F3 0F 58 97 74 02 00 00  - addss xmm2,[rdi+00000274]
+PathOfExile_x64.exe+6B1CF0: F3 0F 58 8F 70 02 00 00  - addss xmm1,[rdi+00000270]
+PathOfExile_x64.exe+6B1CF8: E8 C3 B8 A2 FF           - call PathOfExile_x64.exe+DD5C0
+PathOfExile_x64.exe+6B1CFD: F2 0F 10 44 24 50        - movsd xmm0,[rsp+50]
+// ---------- INJECTING HERE ----------
+PathOfExile_x64.exe+6B1D03: 4C 8D 05 42 5B 36 01     - lea r8,[PathOfExile_x64.exe+1A1784C]
+// ---------- DONE INJECTING  ----------
+PathOfExile_x64.exe+6B1D0A: F3 0F 59 B7 90 02 00 00  - mulss xmm6,[rdi+00000290]
+PathOfExile_x64.exe+6B1D12: 48 8D 15 37 5B 36 01     - lea rdx,[PathOfExile_x64.exe+1A17850]
+PathOfExile_x64.exe+6B1D19: 48 8D 4C 24 60           - lea rcx,[rsp+60]
+PathOfExile_x64.exe+6B1D1E: F2 0F 11 87 70 02 00 00  - movsd [rdi+00000270],xmm0
+PathOfExile_x64.exe+6B1D26: F3 0F 58 B7 B4 02 00 00  - addss xmm6,[rdi+000002B4]
+PathOfExile_x64.exe+6B1D2E: F3 0F 11 74 24 60        - movss [rsp+60],xmm6
+PathOfExile_x64.exe+6B1D34: E8 77 65 A2 FF           - call PathOfExile_x64.exe+D82B0
+PathOfExile_x64.exe+6B1D39: 0F 28 C8                 - movaps xmm1,xmm0
+PathOfExile_x64.exe+6B1D3C: 45 33 C0                 - xor r8d,r8d
+PathOfExile_x64.exe+6B1D3F: 48 8B CF                 - mov rcx,rdi
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"Steam"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>/*
+If you're using the Steam client you must enable this.
+*/
+
+
+[ENABLE]
+label(PathOfExile.exe)
+registersymbol(PathOfExile.exe)
+PathOfExileSteam.exe:
+PathOfExile.exe:
+
+[DISABLE]
+unregistersymbol(PathOfExile.exe)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Comments>Info about this table:
+</Comments>
+  <LuaScript>function poeattach(timer)
+  if getProcessIDFromProcessName("PathofExileSteam.exe") ~= nil then
+    object_destroy(timer)
+    openProcess("PathofExileSteam.exe")
+  end
+end
+
+t=createTimer(nil);
+timer_setInterval(t,10)
+timer_onTimer(t,poeattach)
+</LuaScript>
+</CheatTable>
