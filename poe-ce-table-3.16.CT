@@ -146,7 +146,7 @@ PathOfExile.exe+4E39F3: 74 21                       - je PathOfExile.exe+4E3A16
       <LastState Activated="1"/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>[ENABLE]
-aobscanmodule(MaphackRevealAob, PathofExileSteam.exe, 66 C7 ?? ?? 00 00 C6 ?? ?? 00 C6 ?? ?? 00 C6)
+aobscanmodule(MaphackRevealAob, PathofExile.exe, 66 C7 ?? ?? 00 00 C6 ?? ?? 00 C6 ?? ?? 00 C6)
 define(MaphackReveal, MaphackRevealAob+04)
 registersymbol(MaphackReveal)
 MaphackReveal:
