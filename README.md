@@ -13,3 +13,9 @@ Supports:
 Supports standalone and Steam clients.
 
 Credits to https://github.com/JeyKelly/poe-ce
+
+
+# Disclaimer
+
+This is not detected at this time. 
+Use this tool at your own risk. You alone are responsible for your Path of Exile account and anything that happens while you are signed in to or using your account.
